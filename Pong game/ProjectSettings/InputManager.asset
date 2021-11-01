@@ -304,7 +304,7 @@ InputManager:
     gravity: 1
     dead: 0
     sensitivity: 1
-    snap: 0
+    snap: 1
     invert: 0
     type: 0
     axis: 1
@@ -313,14 +313,14 @@ InputManager:
     m_Name: Vertical2
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: l
-    positiveButton: p
+    negativeButton: down
+    positiveButton: up
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1
     dead: 0
     sensitivity: 1
-    snap: 0
+    snap: 1
     invert: 0
     type: 0
     axis: 1
