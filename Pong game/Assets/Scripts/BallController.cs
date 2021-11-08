@@ -12,10 +12,12 @@ public class BallController : MonoBehaviour
 	Text scoreUIP1;
 	Text scoreUIP2;
 	GameObject panelSelesai;
-	Text txPemenang;
-
-    // Start is called before the first frame update
-    void Start()
+	Text txPemenang; 
+	AudioSource audio;
+	public AudioClip hitSound;
+	public AudioClip hitSound2;
+	// Start is called before the first frame update
+	void Start()
     {
     rigid = GetComponent<Rigidbody2D>();
 	Vector2 arah = new Vector2(2, 0).normalized;
@@ -26,6 +28,7 @@ public class BallController : MonoBehaviour
 	scoreUIP2 = GameObject.Find ("Score2").GetComponent<Text> ();
 	panelSelesai = GameObject.Find ("PanelSelesai");
 	panelSelesai.SetActive (false);
+    audio = GetComponent<AudioSource>();
 	}
 	
 
@@ -35,15 +38,22 @@ public class BallController : MonoBehaviour
         
     }
 	private void OnCollisionEnter2D (Collision2D coll) {
+	if (coll.gameObject.name == "TepiAtas"){
+			audio.PlayOneShot(hitSound);
+		}
+	if (coll.gameObject.name == "TepiBawah"){
+			audio.PlayOneShot(hitSound);
+		}
 	if (coll.gameObject.name == "TepiKanan") {
         scoreP1 += 1;
 		TampilkanScore ();
+		audio.PlayOneShot(hitSound2);
 		if (scoreP1 == 5) {
                 panelSelesai.SetActive(true);
                 txPemenang = GameObject.Find("Pemenang").GetComponent<Text>();
-                txPemenang.text = "player ungu pemenangnya!";
+                txPemenang.text = "player biru pemenangnya!";
                 Destroy(gameObject);
-                return;
+				return;
             }
 		ResetBall ();
         Vector2 arah = new Vector2 (2, 0).normalized;
@@ -52,22 +62,24 @@ public class BallController : MonoBehaviour
     if (coll.gameObject.name == "TepiKiri") {
         scoreP2 += 1;
 		TampilkanScore ();
+		audio.PlayOneShot(hitSound2);
 		if (scoreP2 == 5) {
                 panelSelesai.SetActive(true);
                 txPemenang = GameObject.Find("Pemenang").GetComponent<Text>();
                 txPemenang.text = "player merah pemenangnya!";
                 Destroy(gameObject);
-                return;
+				return;
             }
 		ResetBall ();
         Vector2 arah = new Vector2 (-2, 0).normalized;
         rigid.AddForce (arah * force);
 		}
-	if(coll.gameObject.name == "Pemukul1" || coll.gameObject.name == "Pemukul2") {
+		if (coll.gameObject.name == "Pemukul1" || coll.gameObject.name == "Pemukul2") {
 		float sudut =(transform.position.y - coll.transform.position.y)*5f;
 		Vector2 arah = new Vector2(rigid.velocity.x, sudut).normalized;
 		rigid.velocity = new Vector2(0, 0);
 		rigid.AddForce(arah * force * 2);
+		audio.PlayOneShot(hitSound);
 		}
 	}
 
