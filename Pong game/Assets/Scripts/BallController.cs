@@ -51,7 +51,7 @@ public class BallController : MonoBehaviour
 		if (scoreP1 == 5) {
                 panelSelesai.SetActive(true);
                 txPemenang = GameObject.Find("Pemenang").GetComponent<Text>();
-                txPemenang.text = "player biru pemenangnya!";
+                txPemenang.text = "player ungu pemenangnya!";
                 Destroy(gameObject);
 				return;
             }
